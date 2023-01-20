@@ -112,13 +112,14 @@ def find_measurement_by_proximity(all_years, weather_feature):
 if __name__ == '__main__':
     client_id = '80a15d49-97d2-4674-bb3d-b581dc44e3b3'
     secret = 'b59c1c55-2c27-4e6b-99ae-ac8c905b1265'
+    filepath='abfs://kornmo@kornmo.dfs.core.windows.net/processed_data/Frost/frost_weather_sources.csv'
     years = [2017]
 
     # Pick your desired weather type
     weather_type = WEATHER_TYPES.PRECIPITATION
 
     # Download all frost sources, and create dataset of farmers to use.
-    get_frost_sources_and_create_farmers_dataset(client_id)
+    get_frost_sources_and_create_farmers_dataset(client_id, filepath)
 
     # Download all measurements for each year, and process them into timeseries
     get_and_process_feature_data(years, weather_type)
