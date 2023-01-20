@@ -32,7 +32,7 @@ def get_frost_weather_sources_to_file(frost_client_key):
     frost_sources_df['lat'] = frost_sources_df['geometry'].apply(lambda x: x['coordinates'][1])
 
     # Save as csv.
-    target_file_path = '../../../kornmo-data-files/raw-data/weather-data/frost_weather_sources.csv'
+    target_file_path = 'abfs://kornmo@kornmo.dfs.core.windows.net/processed_data/Frost/frost_weather_sources.csv'
     frost_sources_df.to_csv(target_file_path, index=False)
 
     print(f"\n Done with downloading all frost weather sources\n")
