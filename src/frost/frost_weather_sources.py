@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import adlfs
 
 
 # ---------------- 1. Collects information about all weather station and sensors in Norway -----------------------------
@@ -32,7 +33,7 @@ def get_frost_weather_sources_to_file(frost_client_key):
     frost_sources_df['lat'] = frost_sources_df['geometry'].apply(lambda x: x['coordinates'][1])
 
     # Save as csv.
-    target_file_path = 'abfs://kornmo@kornmo.dfs.core.windows.net/processed_data/Frost/frost_weather_sources.csv'
-    frost_sources_df.to_csv(target_file_path, index=False)
+    target_file_path = 'abfss://kornmo@kornmo.dfs.core.windows.net/primarydata/Vardata/Frost/Sources/frost_weather_sources.csv'
+    dbutils.fs.put(target_file_path, frost_sources_df.to_csv(None, index = False))
 
     print(f"\n Done with downloading all frost weather sources\n")

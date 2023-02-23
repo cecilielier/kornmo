@@ -4,6 +4,7 @@
 !pip install shapely
 !pip install pyproj
 !pip install geopandas
+!pip install adlfs
 
 # COMMAND ----------
 
@@ -30,10 +31,22 @@ WEATHER_TYPES = DotDict({
     'SUNLIGHT': 'sunlight'
 })
 
+def file_exists_in_storage(path):
+    try:
+        dbutils.fs.ls(path)
+        return True
+    except Exception as e:
+        if 'java.io.FileNotFoundException' in str(e):
+            return False
+        else:
+            raise
+
 
 def get_frost_sources_and_create_farmers_dataset(key):
     # Getting all FROST weather sources
-    if os.path.exists('../../../kornmo-data-files/raw-data/weather-data/frost_weather_sources.csv'):
+    sources_path = 'abfss://kornmo@kornmo.dfs.core.windows.net/primarydata/Vardata/Frost/Sources/frost_weather_sources.csv'
+    path_exists = file_exists_in_storage(sources_path)
+    if sources_path == True:
         print(f"Dataset with all FROST weather sources already exists")
     else:
         print(f"Dataset with all FROST weather sources does not exist. Greating one now, hold on tight.")
@@ -136,3 +149,35 @@ if __name__ == '__main__':
     else:
         # Or find measurements by proximity. Only used for Ground
         find_measurement_by_proximity(years, weather_type)
+
+# COMMAND ----------
+
+path = 'abfss://kornmo@kornmo.dfs.core.windows.net/primarydata/Landbrukets_dataflyt/Test_Cecilie.csv'
+def file_exists(path):
+    try:
+        dbutils.fs.ls(path)
+        return True
+    except Exception as e:
+        if 'java.io.FileNotFoundException' in str(e):
+            return False
+        else:
+            raise
+            
+file_exists(path)
+
+# COMMAND ----------
+
+import pandas as pd
+import adlfs
+
+target_file_path = 'abfss://kornmo@kornmo.dfs.core.windows.net/primarydata/Landbrukets_dataflyt/Test_Cecilie.csv'
+#Test med CSV
+# initialize list elements
+data = [10,20,30,40,50,60]
+  
+
+# Create the pandas DataFrame with column name is provided explicitly
+df = pd.DataFrame(data, columns=['Numbers'])
+
+#Test å lagre
+dbutils.fs.put(target_file_path, df.to_csv(None, index = False))
