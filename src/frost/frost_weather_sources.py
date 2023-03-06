@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-import adlfs
+from databricks.sdk.runtime import adlfs
 
 
 # ---------------- 1. Collects information about all weather station and sensors in Norway -----------------------------
