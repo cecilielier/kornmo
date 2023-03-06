@@ -34,6 +34,6 @@ def get_frost_weather_sources_to_file(frost_client_key):
 
     # Save as csv.
     target_file_path = 'abfss://kornmo@kornmo.dfs.core.windows.net/primarydata/Vardata/Frost/sources/frost_weather_sources.csv'    
-    dbutils.fs.put(target_file_path, frost_sources_df.to_csv(None, index = False))
+    databricks.sdk.runtime.dbutils.fs.put(target_file_path, frost_sources_df.to_csv(None, index = False))
 
     print(f"\n Done with downloading all frost weather sources\n")
