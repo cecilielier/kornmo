@@ -51,7 +51,10 @@ def get_frost_sources_and_create_farmers_dataset(key):
         print(f"Dataset with all FROST weather sources already exists")
     else:
         print(f"Dataset with all FROST weather sources does not exist. Greating one now, hold on tight.")
-        get_frost_weather_sources_to_file(key)
+        sources = get_frost_weather_sources_to_file(key)
+        # Save as csv.
+        target_file_path = 'abfss://kornmo@kornmo.dfs.core.windows.net/primarydata/Vardata/Frost/sources/frost_weather_sources.csv'    
+    dbutils.fs.put(target_file_path, frost_sources_df.to_csv(None, index = False))    
 
     # Getting all farmers with their geographic information
     if os.path.exists("../../../kornmo-data-files/raw-data/farm-information/farmers-with-coordinates-and-soil_quality.csv"):

@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
-from databricks.sdk.runtime.pyspark.dbutils import DBUtils
-from databricks.sdk.runtime.pyspark.sql import SparkSession
+#from databricks.sdk.runtime.pyspark.dbutils import DBUtils
+#from databricks.sdk.runtime.pyspark.sql import SparkSession
 
 
 # ---------------- 1. Collects information about all weather station and sensors in Norway -----------------------------
@@ -32,10 +32,12 @@ def get_frost_weather_sources_to_file(frost_client_key):
     # Apply lng and lat to sources as easily accessible columns
     frost_sources_df['lng'] = frost_sources_df['geometry'].apply(lambda x: x['coordinates'][0])
     frost_sources_df['lat'] = frost_sources_df['geometry'].apply(lambda x: x['coordinates'][1])
+    print(f"\n Done with downloading all frost weather sources\n")
+    return frost_sources
 
     # Save as csv.
-    target_file_path = 'abfss://kornmo@kornmo.dfs.core.windows.net/primarydata/Vardata/Frost/sources/frost_weather_sources.csv'    
+    #target_file_path = 'abfss://kornmo@kornmo.dfs.core.windows.net/primarydata/Vardata/Frost/sources/frost_weather_sources.csv'    
     #databricks.sdk.runtime.dbutils.fs.put(target_file_path, frost_sources_df.to_csv(None, index = False))
-    DBUtils.fs.put(target_file_path, frost_sources_df.to_csv(None, index = False))
+    #DBUtils.fs.put(target_file_path, frost_sources_df.to_csv(None, index = False))
 
-    print(f"\n Done with downloading all frost weather sources\n")
+    
