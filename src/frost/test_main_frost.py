@@ -20,6 +20,7 @@ from interpolate_multivalue_with_nn import generate_interpolated_multivalue_for_
 from interpolate_singlevalue_with_nn import generate_interpolated_singlevalue_for_year
 from nan_preprocessing import remove_nan_and_validate
 from find_measurements_by_proximity import assign_to_farmer_and_fill_by_proximity
+import adlfs
 
 
 WEATHER_TYPES = DotDict({
