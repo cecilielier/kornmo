@@ -3,6 +3,8 @@ import pandas as pd
 
 # ---------------- 1. Collects information about all weather station and sensors in Norway -----------------------------
 
+frost_sources_df = pd.DataFrame()
+
 def get_all_frost_sources(frost_client_id):
     url = "https://frost.met.no/sources/v0.jsonld"
     params = {
